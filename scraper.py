@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup as b
 import requests
 import time
 import re
+import os
 
 ref = re.compile("html?")
 base = "https://ota.bodleian.ox.ac.uk"
@@ -14,6 +15,9 @@ def download_book(url,year,title):
     time.sleep(3)
     file = requests.get(newurl).content
     #write it to a local file for later use.
+    directory = f'{year}0'
+    if not os.path.exists(directory):
+        os.makedirs(directory)
     with open(f'{year}0/{title}.txt','wb+') as outfile:
         outfile.write(file)
     return
